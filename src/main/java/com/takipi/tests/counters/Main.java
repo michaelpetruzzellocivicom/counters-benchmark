@@ -4,12 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import com.takipi.tests.counters.implementations.Adder;
-import com.takipi.tests.counters.implementations.Atomic;
-import com.takipi.tests.counters.implementations.Dirty;
-import com.takipi.tests.counters.implementations.RWLock;
-import com.takipi.tests.counters.implementations.Synchronized;
-import com.takipi.tests.counters.implementations.Volatile;
+import com.takipi.tests.counters.implementations.*;
 
 public class Main
 {
@@ -111,6 +106,10 @@ public class Main
 				return new Synchronized();
 			case VOLATILE:
 				return new Volatile();
+            case STAMPED:
+                return new Stamped();
+            case OPTIMISTIC:
+                return new OptimisticStamped();
 		}
 		
 		return null;
