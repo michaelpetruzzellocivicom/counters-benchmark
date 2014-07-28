@@ -5,46 +5,55 @@ import java.util.concurrent.locks.StampedLock;
 import com.takipi.tests.counters.Counter;
 
 public class Stamped implements Counter {
+    public Stamped(int retries) {
+        this.retries = retries;
+    }
+    public Stamped() {
+        this.retries = 1;
+    }
 
-	private StampedLock rwlock = new StampedLock();
+
+    private StampedLock rwlock = new StampedLock();
 	
 	private long counter;
-	public long s, t;
+    private int retries;
+
 	
 	public long getCounter()
 	{
-		long stamp = rwlock.tryOptimisticRead();
-		
-		try
-		{
-			long result = counter;
+        long result;
+        for (int i=0;i<retries;i++) {
+            long stamp = rwlock.tryOptimisticRead();
+            if (stamp != 0) {
+                result = counter;
+
+                if (rwlock.validate(stamp)) {
+                    return result;
+                }
+            }
+
+        }
+
+	    long stamp = rwlock.readLock();
+        try {
+
+            result = counter;
+
+        } finally {
+            rwlock.unlockRead(stamp);
+        }
 			
-			if (rwlock.validate(stamp))
-			{
-				return result;
-			}
-			
-			stamp = rwlock.readLock();
-			
-			result = counter;
-			
-			rwlock.unlockRead(stamp);
-			
-			return counter;
-		}
-		finally
-		{
-			
-		}
+	    return result;
+
 	}
 	
-	public void increment()
+	public void increment(long amount)
 	{
 		long stamp = rwlock.writeLock();
 		
 		try
 		{	
-			++counter;
+			counter+= amount;
 		}
 		finally
 		{

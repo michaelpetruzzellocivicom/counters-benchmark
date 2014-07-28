@@ -16,11 +16,11 @@ public class Synchronized implements Counter
 		}
 	}
 	
-	public void increment() 
+	public void increment(long amount)
 	{
 		synchronized (lock)
 		{
-			++counter;
+			counter+=amount;
 		}
 	}
 }

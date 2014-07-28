@@ -1,14 +1,14 @@
 package com.takipi.tests.counters.implementations;
 
+import com.takipi.tests.counters.Counter;
+
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import com.takipi.tests.counters.Counter;
-
-public class RWLock implements Counter
+public class RWLockFair implements Counter
 {
-	private ReadWriteLock rwlock = new ReentrantReadWriteLock();
+	private ReadWriteLock rwlock = new ReentrantReadWriteLock(true);
 	
 	private Lock rlock = rwlock.readLock();
 	private Lock wlock = rwlock.writeLock();

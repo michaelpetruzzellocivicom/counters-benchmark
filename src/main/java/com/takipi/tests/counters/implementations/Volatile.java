@@ -11,8 +11,8 @@ public class Volatile implements Counter
 		return counter;
 	}
 	
-	public void increment() 
+	public void increment(long amount)
 	{
-		++counter;
+		counter+= amount;
 	}
 }

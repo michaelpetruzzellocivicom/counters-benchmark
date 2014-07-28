@@ -1,12 +1,13 @@
 package com.takipi.tests.counters.implementations;
 
+import com.takipi.tests.counters.Counter;
+
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import com.takipi.tests.counters.Counter;
-
-public class RWLock implements Counter
+public class RWTryLock implements Counter
 {
 	private ReadWriteLock rwlock = new ReentrantReadWriteLock();
 	
@@ -19,8 +20,12 @@ public class RWLock implements Counter
 	{
 		try
 		{
-			rlock.lock();		
-			return counter;
+            try {
+                rlock.tryLock(10, TimeUnit.MINUTES);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            return counter;
 		}
 		finally
 		{
@@ -32,8 +37,12 @@ public class RWLock implements Counter
 	{
 		try
 		{
-			wlock.lock();		
-			counter+=amount;
+            try {
+			    wlock.tryLock(10, TimeUnit.MINUTES);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            counter+=amount;
 		}
 		finally
 		{

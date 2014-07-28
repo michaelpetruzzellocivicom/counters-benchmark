@@ -18,7 +18,7 @@ public class Writer implements Runnable
 				break;
 			}
 			
-			counter.increment();
+			counter.increment(1);
 		}
 	}
 }

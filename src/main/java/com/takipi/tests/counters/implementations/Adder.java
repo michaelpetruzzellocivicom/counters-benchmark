@@ -13,8 +13,8 @@ public class Adder implements Counter
 		return adder.longValue();
 	}
 	
-	public void increment()
+	public void increment(long amount)
 	{
-		adder.increment();
+		adder.add(amount);
 	}
 }

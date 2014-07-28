@@ -13,8 +13,8 @@ public class Atomic implements Counter
 		return atomic.get();
 	}
 	
-	public void increment()
+	public void increment(long amount)
 	{
-		atomic.incrementAndGet();
+		atomic.addAndGet(amount);
 	}
 }
