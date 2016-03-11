@@ -30,7 +30,7 @@ public class ReaderWriter implements Runnable {
                     break;
                 }
             }  else {
-                counter.increment(modulo);
+                counter.increment(1);
             }
             innerCounter++;
         }

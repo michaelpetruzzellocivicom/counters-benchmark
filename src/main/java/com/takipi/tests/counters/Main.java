@@ -9,7 +9,7 @@ import com.takipi.tests.counters.implementations.*;
 public class Main
 {
 	public static long TARGET_NUMBER 	= 200000000l;
-	public static int RTHREADS 			= 10;
+	public static int RTHREADS 			= 4;
     public static int MODULO 			= 2;
 	public static int ROUNDS 			= 10;
 	private static String COUNTER 		= Counters.DIRTY.toString();
